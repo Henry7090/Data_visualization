@@ -9,7 +9,7 @@ var svg = d3.select("#my_dataviz")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-const data_path = "iris.csv";
+const data_path = "./iris.csv";
 d3.csv(data_path).then(function (data) {
     data.splice(150, 1);
     var color = d3.scaleOrdinal()
