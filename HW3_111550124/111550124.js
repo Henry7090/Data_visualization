@@ -28,7 +28,7 @@ function computeCorrelationMatrix(data) {
 function drawCorrelationMatrix(correlationMatrix, variables, category) {
 
     const width = 1000;  
-    const height = 700; 
+    const height = 900; 
     const margin = { top: 50, right: 50, bottom: 150, left: 150 }; 
     const cellSize = (width - margin.left - margin.right) / variables.length;
 
@@ -99,7 +99,7 @@ function updateMatrixBySex(sex, data) {
     drawCorrelationMatrix(matrix, variables, sex);
 }
 
-d3.text("http://vis.lab.djosix.com:2024/data/abalone.data").then(function(text) {
+d3.text("abalone.data").then(function(text) {
     // Parse the text data
     const data = d3.csvParseRows(text, function(row) {
         return {
