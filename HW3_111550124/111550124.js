@@ -99,7 +99,7 @@ function updateMatrixBySex(sex, data) {
     drawCorrelationMatrix(matrix, variables, sex);
 }
 
-d3.text("abalone.data").then(function(text) {
+d3.text("./abalone.data").then(function(text) {
     // Parse the text data
     const data = d3.csvParseRows(text, function(row) {
         return {
