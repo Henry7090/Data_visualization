@@ -1,0 +1,23 @@
+body {
+    background-color: #f0f0f0;  
+    font-family: Arial, sans-serif; 
+}
+
+#my_dataviz {
+    background-color: #ffffff;  
+    padding: 20px;             
+    margin: 0 auto;             
+    border-radius: 10px;      
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.footer {
+    font-size: small;
+    color: gray;
+    margin-top: 20px;
+}
+
+h1 {
+    color: #333;  
+    margin-bottom: 20px;
+}

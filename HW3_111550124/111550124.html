@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW3 Correlation Matrix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            background-color: #f4f7fa;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        #mychart {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            margin-top: 20px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        fieldset {
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin: 20px;
+            width: 50%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        legend {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #444;
+        }
+
+        label {
+            font-size: 1.2rem;
+            margin-left: 10px;
+            color: #333;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        /* Add hover effect on radio buttons */
+        input[type="radio"]:hover {
+            cursor: pointer;
+            outline: 2px solid #3498db;
+        }
+
+        .text-muted {
+            margin-top: 50px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        hr {
+            width: 80%;
+            border: 0;
+            border-top: 1px solid #ddd;
+            margin: 50px 0;
+        }
+
+        /* Make sure the chart resizes properly */
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 768px) {
+            #mychart, fieldset {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            legend {
+                font-size: 1.3rem;
+            }
+
+            label {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1></h1>
+    <h1>HW3 Correlation Matrix</h1>
+
+    <!-- Create a div where the graph will take place -->
+    <div class="legend"></div>
+    <div id="mychart">
+        <!-- D3 chart will be rendered here -->
+    </div>
+
+    <!-- Fieldset for choosing the sex -->
+    <fieldset>
+        <legend>Choose Gender</legend>
+        <div>
+            <input type="radio" id="male" name="sex" value="male" checked />
+            <label for="male">Male</label>
+        </div>
+        <div>
+            <input type="radio" id="female" name="sex" value="female" />
+            <label for="female">Female</label>
+        </div>
+        <div>
+            <input type="radio" id="infant" name="sex" value="infant" />
+            <label for="infant">Infant</label>
+        </div>
+    </fieldset>
+
+    <hr>
+
+    <!-- Footer text with author info -->
+    <div class="text-muted">
+        <p>Author: 陳燁</p>
+        <p>Student ID: 111550124</p>
+        <p>Date: 2024/09/20</p>
+    </div>
+
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v7.js"></script>
+    <script src="111550124.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Two Menus with Dynamic D3 Update</title>
+        <!-- <style>
+            .menu-container {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 20px; /* Space between the menus */
+            }
+        </style> -->
+        <link rel="stylesheet" href="./111550124.css">
+    </head>
+    <body>
+
+        <div class="menu-container">
+            <h1>HW 1 - Scatter Plots</h1>
+        </div>
+
+        <div id="my_dataviz"></div>
+        <div>\n</div>
+        <div class="menu-container">
+            <div>
+                <label for="X_axis">X axis:</label>
+                <select id="X_axis">
+                    <option value="sepal length">sepal length</option>
+                    <option value="sepal width">sepal width</option>
+                    <option value="petal length">petal length</option>
+                    <option value="petal width">petal width</option>
+                </select>
+            </div>
+            <div>
+                <label for="Y_axis">Y axis:</label>
+                <select id="Y_axis">
+                    <option value="sepal length">sepal length</option>
+                    <option value="sepal width">sepal width</option>
+                    <option value="petal length">petal length</option>
+                    <option value="petal width">petal width</option>
+                </select>
+            </div>
+        </div>
+        <div class="footer" style="font-size: small; color: gray;">
+            <p>Author: 陳燁</p>
+            <p>Student ID: 111550124</p>
+            <p>Date: 2024/09/14</p>
+        </div>
+        <script src="https://d3js.org/d3.v7.js"></script>
+        <script src="./111550124.js"></script>
+    </body>
+    </html>
