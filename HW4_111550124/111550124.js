@@ -18,7 +18,7 @@ var svgElement = d3.select("#my_dataviz").append("svg")
 var svg = svgElement.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("data.csv", function(data) {
+d3.csv("http://vis.lab.djosix.com:2024/data/iris.csv", function(data) {
 
   data.forEach(function(d) {
     attributes.forEach(function(attr) {
@@ -232,3 +232,6 @@ function cross(a, b) {
   }
   return c;
 }
+
+
+// http://60a07238dd57284e.vis.lab.djosix.com:2024/

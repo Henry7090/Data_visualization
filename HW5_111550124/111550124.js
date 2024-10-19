@@ -1,52 +1,39 @@
-// 111550124.js
-
-// Set margins of the graph
+// http://798334c8e1582ee8.vis.lab.djosix.com:2024/
 var margin = {top: 30, right: 200, bottom: 50, left: 400};
 
-// Set total width of the SVG
 var totalWidth = 1200; // Adjusted width to accommodate all elements
 
-// Create the SVG object and store it in 'svg'
 var svg = d3.select("#my_dataviz")
   .append("svg")
   .attr("width", totalWidth);
 
-// Create a 'g' element inside the SVG and store it in 'chart'
 var chart = svg.append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// List of subgroups (criteria)
 var subgroups = ["scores_teaching", "scores_research", "scores_citations", "scores_industry_income", "scores_international_outlook"];
 
-// Color palette
 var color = d3.scaleOrdinal()
   .domain(subgroups)
   .range(d3.schemeCategory10);
 
-// Tooltip
 var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-// Load the data from data.csv
-d3.csv("data.csv").then(function(data) {
+d3.csv("http://vis.lab.djosix.com:2024/data/TIMES_WorldUniversityRankings_2024.csv").then(function(data) {
 
-    // Filter out schools without complete data
     data = data.filter(function(d) {
-        // Check that all required score fields are present and are numbers
         return subgroups.every(function(key) {
             var value = parseFloat(d[key]);
             return !isNaN(value);
         });
     });
 
-    // Convert string values to numbers
     data.forEach(function(d) {
         subgroups.forEach(function(key) {
             d[key] = +d[key];
         });
 
-        // Handle 'scores_overall' which may contain ranges like '55.9–58.6'
         if (d.scores_overall.includes('–')) {
             d.scores_overall = parseFloat(d.scores_overall.split('–')[0]);
         } else {
@@ -54,41 +41,30 @@ d3.csv("data.csv").then(function(data) {
         }
     });
 
-    // Set initial sorting by overall score descending
     data.sort(function(a, b) {
         return b.scores_overall - a.scores_overall;
     });
 
-    // Store the original data for later use
     var originalData = data.slice();
 
-    // Function to update the chart based on selected number of universities
     function updateChart() {
-        // Get the selected number of universities
         var selectedNumber = d3.select("#number").property("value");
 
-        // Filter data based on the selected number
         if (selectedNumber !== "all") {
             data = originalData.slice(0, +selectedNumber);
         } else {
             data = originalData.slice();
         }
 
-        // Set dimensions of the graph
         var barHeight = 20; // Height allocated per bar
         var height = data.length * barHeight; // Total chart height
         var width = totalWidth - margin.left - margin.right; // Chart width
 
-        // Update SVG dimensions
         svg.attr("height", height + margin.top + margin.bottom);
 
-        // List of groups (universities)
         var groups = data.map(function(d) { return d.name; });
 
-        // Update groups after sorting
         groups = data.map(function(d) { return d.name; });
-
-        // Update X axis
         var x = d3.scaleLinear()
             .domain([0, d3.max(data, function(d) {
                 return d3.sum(subgroups, function(key) {
@@ -104,7 +80,6 @@ d3.csv("data.csv").then(function(data) {
           .attr("transform", "translate(0," + height + ")")
           .call(d3.axisBottom(x));
 
-        // Update Y axis
         var y = d3.scaleBand()
             .domain(groups)
             .range([0, height])
@@ -116,19 +91,15 @@ d3.csv("data.csv").then(function(data) {
           .attr("class", "y-axis")
           .call(d3.axisLeft(y));
 
-        // Implement text wrapping for y-axis labels
         yAxis.selectAll(".tick text")
           .call(wrap, margin.left - 20); // Adjust wrap width based on left margin
 
-        // Stack the data
         var stackedData = d3.stack()
           .keys(subgroups)
           (data);
 
-        // Remove previous layers
         chart.selectAll("g.layer").remove();
 
-        // Create the stacked bars
         var layers = chart.append("g")
           .selectAll("g.layer")
           .data(stackedData, function(d) { return d.key; })
@@ -161,7 +132,6 @@ d3.csv("data.csv").then(function(data) {
                     .style("opacity", 0);
             });
 
-        // Update legend positions
         chart.selectAll(".legend").remove();
 
         // Legend
@@ -187,36 +157,29 @@ d3.csv("data.csv").then(function(data) {
             .attr("fill", color)
             .attr("stroke", color)
             .on("click", function(event, d) {
-                // Toggle criterion
                 activeCriteria[d] = !activeCriteria[d];
 
-                // Update the opacity of the legend item
                 d3.select(this).attr("opacity", activeCriteria[d] ? 1 : 0.5);
 
-                // Update the subgroups
                 var filteredSubgroups = subgroups.filter(function(key) {
                     return activeCriteria[key];
                 });
 
-                // Recompute the stack
                 var stackedData = d3.stack()
                     .keys(filteredSubgroups)
                     (data);
 
-                // Update the x scale domain
                 x.domain([0, d3.max(data, function(d) {
                     return d3.sum(filteredSubgroups, function(key) {
                         return d[key];
                     });
                 })]);
 
-                // Update the x-axis
                 chart.select(".x-axis")
                     .transition()
                     .duration(1000)
                     .call(d3.axisBottom(x));
 
-                // Update the bars
                 var groupsLayer = chart.selectAll("g.layer")
                     .data(stackedData, function(d) { return d.key; });
 
@@ -387,7 +350,6 @@ d3.csv("data.csv").then(function(data) {
     });
 
 
-        // Function to wrap text in SVG
         function wrap(text, width) {
             text.each(function() {
                 var text = d3.select(this),
@@ -421,10 +383,8 @@ d3.csv("data.csv").then(function(data) {
         }
     }
 
-    // Initial chart rendering
     updateChart();
 
-    // Listen for changes on the select input
     d3.select("#number").on("change", function() {
         updateChart();
     });
