@@ -20,7 +20,7 @@ var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-d3.csv("data.csv").then(function(data) {
+d3.csv("./data.csv").then(function(data) {
 
     data = data.filter(function(d) {
         return subgroups.every(function(key) {
