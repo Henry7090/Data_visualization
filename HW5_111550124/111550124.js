@@ -20,7 +20,7 @@ var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-d3.csv("http://vis.lab.djosix.com:2024/data/TIMES_WorldUniversityRankings_2024.csv").then(function(data) {
+d3.csv("data.csv").then(function(data) {
 
     data = data.filter(function(d) {
         return subgroups.every(function(key) {
