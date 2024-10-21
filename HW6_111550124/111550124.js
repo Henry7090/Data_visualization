@@ -75,16 +75,18 @@ d3.csv('data.csv', d => {
 
     x.domain(d3.extent(stackData, d => d.date));
 
+    // Set stack offset to silhouette to center the streamgraph
     const stack = d3.stack()
         .keys(keys)
-        .order(d3.stackOrderNone);
+        .order(d3.stackOrderNone)
+        .offset(d3.stackOffsetSilhouette);
 
     let layers = stack(stackData);
 
-    y.domain([
-        0,
-        d3.max(layers, layer => d3.max(layer, d => d[1]))
-    ]);
+    // Adjust y-domain to include negative values
+    const yMin = d3.min(layers, layer => d3.min(layer, d => d[0]));
+    const yMax = d3.max(layers, layer => d3.max(layer, d => d[1]));
+    y.domain([yMin, yMax]);
 
     let layer = svg.selectAll('.layer')
         .data(layers)
@@ -164,13 +166,14 @@ d3.csv('data.csv', d => {
             }
         });
 
-        stack.keys(activeKeys);
+        stack.keys(activeKeys)
+             .offset(d3.stackOffsetSilhouette); // Ensure offset is silhouette
         layers = stack(stackData);
 
-        y.domain([
-            0,
-            d3.max(layers, layer => d3.max(layer, d => d[1]))
-        ]);
+        // Adjust y-domain
+        const yMin = d3.min(layers, layer => d3.min(layer, d => d[0]));
+        const yMax = d3.max(layers, layer => d3.max(layer, d => d[1]));
+        y.domain([yMin, yMax]);
 
         const layerSelection = svg.selectAll('.layer')
             .data(layers, d => d.key);
@@ -241,12 +244,13 @@ d3.csv('data.csv', d => {
         } else if (option === 'Descending') {
             stack.order(d3.stackOrderDescending);
         }
+        stack.offset(d3.stackOffsetSilhouette); // Ensure offset is silhouette
         layers = stack(stackData);
 
-        y.domain([
-            0,
-            d3.max(layers, layer => d3.max(layer, d => d[1]))
-        ]);
+        // Adjust y-domain
+        const yMin = d3.min(layers, layer => d3.min(layer, d => d[0]));
+        const yMax = d3.max(layers, layer => d3.max(layer, d => d[1]));
+        y.domain([yMin, yMax]);
 
         const layerSelection = svg.selectAll('.layer')
             .data(layers, d => d.key);
@@ -264,3 +268,6 @@ d3.csv('data.csv', d => {
 }).catch(error => {
     console.error('Error loading or processing the data:', error);
 });
+
+
+//http://83a56eda714b2fd4.vis.lab.djosix.com:2024/
